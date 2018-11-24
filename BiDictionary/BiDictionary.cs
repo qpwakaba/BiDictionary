@@ -115,12 +115,8 @@ namespace qpwakaba
             get => this.normal[key];
             set
             {
-                if (this.reverse.ContainsKey(value))
-                {
-                    this.normal.Remove(this.reverse[value]);
-                }
-                this.normal[key] = value;
-                this.reverse[value] = key;
+                this.Remove(key);
+                this.Add(key, value);
             }
         }
 
