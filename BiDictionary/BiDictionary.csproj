@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>qpwakaba</RootNamespace>
+
+    <Company>qpwakaba</Company>
+    <AssemblyTitle>BiDictionary</AssemblyTitle>
+    <Copyright>NYSL Version 0.9982</Copyright>
+    <AssemblyVersion>1.0</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    
+  </PropertyGroup>
+
+</Project>
