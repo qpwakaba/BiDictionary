@@ -8,7 +8,6 @@ namespace qpwakaba
     public class BiDictionary<TKey, TValue> :
         IBiDictionary<TKey, TValue>,
         IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
-        IDeserializationCallback,
         ISerializable
     {
         private readonly Dictionary<TKey, TValue> normal;
@@ -185,11 +184,6 @@ namespace qpwakaba
 
             ILLEGAL_STATE:
             throw new SerializationException();
-        }
-        void IDeserializationCallback.OnDeserialization(object sender)
-        {
-            this.normal.OnDeserialization(sender);
-            this.reverse.OnDeserialization(sender);
         }
     }
 }
