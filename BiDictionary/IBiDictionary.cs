@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace qpwakaba
 {
@@ -15,7 +15,7 @@ namespace qpwakaba
         bool Remove(TKey key);
         bool TryGetValue(TKey key, out TValue value);
 
-        BiDictionary<TValue, TKey> Reverse();
+        BiDictionary<TValue, TKey> Inverse();
 
     }
 }

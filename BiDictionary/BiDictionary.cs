@@ -11,103 +11,103 @@ namespace qpwakaba
         ISerializable
     {
         private readonly Dictionary<TKey, TValue> normal;
-        private readonly Dictionary<TValue, TKey> reverse;
-        private readonly BiDictionary<TValue, TKey> reverseBiDictionary;
+        private readonly Dictionary<TValue, TKey> inverse;
+        private readonly BiDictionary<TValue, TKey> inverseBiDictionary;
 
         #region private constructors
         private BiDictionary(BiDictionary<TValue, TKey> normal)
         {
-            this.normal = normal.reverse;
-            this.reverse = normal.normal;
-            this.reverseBiDictionary = normal;
+            this.normal = normal.inverse;
+            this.inverse = normal.normal;
+            this.inverseBiDictionary = normal;
         }
         #endregion
         #region public constructors
         public BiDictionary()
         {
             this.normal = new Dictionary<TKey, TValue>();
-            this.reverse = new Dictionary<TValue, TKey>();
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>();
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(int capacity)
         {
             this.normal = new Dictionary<TKey, TValue>(capacity);
-            this.reverse = new Dictionary<TValue, TKey>(capacity);
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>(capacity);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IEqualityComparer<TKey> comparer)
         {
             this.normal = new Dictionary<TKey, TValue>(comparer);
-            this.reverse = new Dictionary<TValue, TKey>();
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>();
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IDictionary<TKey, TValue> dictionary)
         {
             this.normal = new Dictionary<TKey, TValue>(dictionary.Count);
-            this.reverse = new Dictionary<TValue, TKey>(dictionary.Count);
+            this.inverse = new Dictionary<TValue, TKey>(dictionary.Count);
             foreach (var kv in dictionary)
             {
                 this.Add(kv.Key, kv.Value);
             }
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(int capacity, IEqualityComparer<TKey> comparer)
         {
             this.normal = new Dictionary<TKey, TValue>(capacity, comparer);
-            this.reverse = new Dictionary<TValue, TKey>(capacity);
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>(capacity);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
         {
             this.normal = new Dictionary<TKey, TValue>(dictionary.Count, comparer);
-            this.reverse = new Dictionary<TValue, TKey>(dictionary.Count);
+            this.inverse = new Dictionary<TValue, TKey>(dictionary.Count);
             foreach (var kv in dictionary)
             {
                 this.Add(kv.Key, kv.Value);
             }
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IEqualityComparer<TValue> comparer)
         {
             this.normal = new Dictionary<TKey, TValue>();
-            this.reverse = new Dictionary<TValue, TKey>(comparer);
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>(comparer);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IEqualityComparer<TKey> comparerK, IEqualityComparer<TValue> comparerV)
         {
             this.normal = new Dictionary<TKey, TValue>(comparerK);
-            this.reverse = new Dictionary<TValue, TKey>(comparerV);
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>(comparerV);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(int capacity, IEqualityComparer<TKey> comparerK, IEqualityComparer<TValue> comparerV)
         {
             this.normal = new Dictionary<TKey, TValue>(capacity, comparerK);
-            this.reverse = new Dictionary<TValue, TKey>(capacity, comparerV);
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverse = new Dictionary<TValue, TKey>(capacity, comparerV);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
 
         public BiDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparerK, IEqualityComparer<TValue> comparerV)
         {
             this.normal = new Dictionary<TKey, TValue>(dictionary.Count, comparerK);
-            this.reverse = new Dictionary<TValue, TKey>(dictionary.Count, comparerV);
+            this.inverse = new Dictionary<TValue, TKey>(dictionary.Count, comparerV);
             foreach (var kv in dictionary)
             {
                 this.Add(kv.Key, kv.Value);
             }
-            this.reverseBiDictionary = new BiDictionary<TValue, TKey>(this);
+            this.inverseBiDictionary = new BiDictionary<TValue, TKey>(this);
         }
         #endregion
 
 
-        public BiDictionary<TValue, TKey> Reverse() => this.reverseBiDictionary;
+        public BiDictionary<TValue, TKey> Inverse() => this.inverseBiDictionary;
 
         public TValue this[TKey key]
         {
@@ -126,28 +126,28 @@ namespace qpwakaba
 
         public void Add(TKey key, TValue value)
         {
-            if (this.normal.ContainsKey(key) || this.reverse.ContainsKey(value))
+            if (this.normal.ContainsKey(key) || this.inverse.ContainsKey(value))
             {
                 throw new ArgumentException();
             }
-            this.reverse.Add(value, key);
+            this.inverse.Add(value, key);
             this.normal.Add(key, value);
         }
 
         public void Clear()
         {
             this.normal.Clear();
-            this.reverse.Clear();
+            this.inverse.Clear();
         }
 
         public bool ContainsKey(TKey key) => this.normal.ContainsKey(key);
-        public bool ContainsValue(TValue value) => this.reverse.ContainsKey(value);
+        public bool ContainsValue(TValue value) => this.inverse.ContainsKey(value);
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => this.normal.GetEnumerator();
         public bool Remove(TKey key)
         {
             if (this.ContainsKey(key))
             {
-                this.reverse.Remove(this.normal[key]);
+                this.inverse.Remove(this.normal[key]);
                 this.normal.Remove(key);
                 return true;
             }
@@ -165,18 +165,18 @@ namespace qpwakaba
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue(nameof(this.normal), this.normal);
-            info.AddValue(nameof(this.reverse), this.reverse);
+            info.AddValue(nameof(this.inverse), this.inverse);
         }
         protected BiDictionary(SerializationInfo info, StreamingContext context)
         {
             this.normal = (Dictionary<TKey, TValue>)info.GetValue(nameof(this.normal), typeof(Dictionary<TKey, TValue>));
-            this.reverse = (Dictionary<TValue, TKey>)info.GetValue(nameof(this.reverse), typeof(Dictionary<TValue, TKey>));
+            this.inverse = (Dictionary<TValue, TKey>)info.GetValue(nameof(this.inverse), typeof(Dictionary<TValue, TKey>));
 
-            if (this.normal.Count == this.reverse.Count)
+            if (this.normal.Count == this.inverse.Count)
             {
                 foreach (var item in this.normal)
                 {
-                    if (!this.reverse.ContainsKey(item.Value))
+                    if (!this.inverse.ContainsKey(item.Value))
                         goto ILLEGAL_STATE;
                 }
                 return;
