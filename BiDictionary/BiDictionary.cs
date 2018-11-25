@@ -115,6 +115,7 @@ namespace qpwakaba
             set
             {
                 this.Remove(key);
+                this.Inverse().Remove(value);
                 this.Add(key, value);
             }
         }
